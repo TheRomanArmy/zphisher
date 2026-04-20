@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Job Profitability Report</h2>
+
+<table class="table table-sm table-striped">
+  <thead><tr><th>Job ID</th><th>Revenue</th><th>Direct Cost</th><th>Gross Profit</th><th>Margin %</th></tr></thead>
+  <tbody>
+    {% for row in rows %}
+      <tr>
+        <td>{{ row.job_id }}</td>
+        <td>${{ '%.2f'|format(row.revenue) }}</td>
+        <td>${{ '%.2f'|format(row.direct_cost) }}</td>
+        <td>${{ '%.2f'|format(row.gross_profit) }}</td>
+        <td>{{ '%.1f'|format(row.margin_pct) ~ '%' if row.margin_pct is not none else '-' }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="text-muted">No job data yet. Import invoices and add direct costs first.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

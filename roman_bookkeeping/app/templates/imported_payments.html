@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Imported Payments</h2>
+<table class="table table-sm table-striped">
+  <thead><tr><th>Payment ID</th><th>Invoice ID</th><th>Customer</th><th>Job</th><th>Date</th><th>Method</th><th>Amount</th></tr></thead>
+  <tbody>
+    {% for row in rows %}
+      <tr>
+        <td>{{ row.scheduler_payment_id }}</td>
+        <td>{{ row.scheduler_invoice_id or '-' }}</td>
+        <td>{{ row.customer_id or '-' }}</td>
+        <td>{{ row.job_id or '-' }}</td>
+        <td>{{ row.payment_date }}</td>
+        <td>{{ row.payment_method or '-' }}</td>
+        <td>${{ '%.2f'|format(row.amount) }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="7" class="text-muted">No payments imported yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
