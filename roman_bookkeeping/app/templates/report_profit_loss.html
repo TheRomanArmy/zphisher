@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Profit &amp; Loss Report</h2>
+
+<form method="get" class="row g-3 mb-3">
+  <div class="col-md-3"><input type="date" name="start_date" class="form-control" value="{{ start_date or '' }}"></div>
+  <div class="col-md-3"><input type="date" name="end_date" class="form-control" value="{{ end_date or '' }}"></div>
+  <div class="col-md-2"><button class="btn btn-primary w-100">Run</button></div>
+</form>
+
+<table class="table table-bordered w-auto">
+  <tr><th>Revenue</th><td>${{ '%.2f'|format(report.revenue) }}</td></tr>
+  <tr><th>Direct Costs</th><td>${{ '%.2f'|format(report.direct_cost) }}</td></tr>
+  <tr class="table-light"><th>Gross Profit</th><td>${{ '%.2f'|format(report.gross_profit) }}</td></tr>
+  <tr><th>Overhead</th><td>${{ '%.2f'|format(report.overhead) }}</td></tr>
+  <tr class="table-success"><th>Net Profit</th><td>${{ '%.2f'|format(report.net_profit) }}</td></tr>
+</table>
+{% endblock %}

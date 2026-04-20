@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h6 class="text-muted">Imported Invoice Revenue</h6>
+        <h4>${{ '%.2f'|format(totals.invoice_total) }}</h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h6 class="text-muted">Imported Payments</h6>
+        <h4>${{ '%.2f'|format(totals.payment_total) }}</h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h6 class="text-muted">Recorded Expenses</h6>
+        <h4>${{ '%.2f'|format(totals.expense_total) }}</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-info">
+  This is a practical v1 dashboard focused on clarity. Next steps can add charts and richer KPIs.
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Chart of Accounts</h2>
+
+<div class="card mb-4">
+  <div class="card-header">Add Account</div>
+  <div class="card-body">
+    <form method="post" class="row g-3">
+      <div class="col-md-2"><input name="code" class="form-control" placeholder="Code" required></div>
+      <div class="col-md-3"><input name="name" class="form-control" placeholder="Name" required></div>
+      <div class="col-md-2">
+        <select name="account_type" class="form-select" required>
+          <option value="">Type...</option>
+          <option>asset</option>
+          <option>liability</option>
+          <option>equity</option>
+          <option>income</option>
+          <option>expense</option>
+        </select>
+      </div>
+      <div class="col-md-3"><input name="category" class="form-control" placeholder="Category"></div>
+      <div class="col-md-2"><button class="btn btn-primary w-100">Add</button></div>
+    </form>
+  </div>
+</div>
+
+<table class="table table-sm table-striped">
+  <thead><tr><th>Code</th><th>Name</th><th>Type</th><th>Category</th><th>Active</th></tr></thead>
+  <tbody>
+    {% for row in account_rows %}
+      <tr>
+        <td>{{ row.code }}</td>
+        <td>{{ row.name }}</td>
+        <td>{{ row.account_type }}</td>
+        <td>{{ row.category or '-' }}</td>
+        <td>{{ 'Yes' if row.is_active else 'No' }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="text-muted">No accounts found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
