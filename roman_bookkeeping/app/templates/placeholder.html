@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ page_title }}</h2>
+<div class="alert alert-info">
+  This page is scaffolded for Version 1. <strong>TODO:</strong> implement full feature logic in next steps.
+</div>
+<a class="btn btn-secondary" href="{{ url_for('main.dashboard') }}">Back to Dashboard</a>
+{% endblock %}

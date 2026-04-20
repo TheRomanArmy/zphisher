@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Settings / Sync</h2>
+<p class="text-muted">Use this page to sync invoices/payments from your scheduler database.</p>
+
+<div class="d-flex gap-2 mb-3">
+  <form method="post"><input type="hidden" name="action" value="sync_invoices"><button class="btn btn-primary">Sync Invoices</button></form>
+  <form method="post"><input type="hidden" name="action" value="sync_payments"><button class="btn btn-primary">Sync Payments</button></form>
+  <form method="post"><input type="hidden" name="action" value="sync_full"><button class="btn btn-success">Run Full Sync</button></form>
+</div>
+
+<div class="alert alert-secondary small">
+  Expected scheduler tables in v1: <code>invoices</code> and <code>payments</code>.
+</div>
+
+<h5>Sync Log</h5>
+<table class="table table-sm table-striped">
+  <thead><tr><th>Type</th><th>Started</th><th>Completed</th><th>Status</th><th>Rows</th><th>Message</th></tr></thead>
+  <tbody>
+    {% for row in sync_rows %}
+      <tr>
+        <td>{{ row.sync_type }}</td>
+        <td>{{ row.started_at }}</td>
+        <td>{{ row.completed_at or '-' }}</td>
+        <td>{{ row.status }}</td>
+        <td>{{ row.rows_processed }}</td>
+        <td>{{ row.message or '-' }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="6" class="text-muted">No sync runs yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
