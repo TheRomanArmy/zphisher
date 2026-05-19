@@ -25,27 +25,9 @@ def init_db():
     db.commit()
 
 
-def _is_schema_initialized(db):
-    row = db.execute(
-        "SELECT name FROM sqlite_master WHERE type='table' AND name='users'"
-    ).fetchone()
-    return row is not None
-
-
-def ensure_db_initialized():
-    db = get_db()
-    if not _is_schema_initialized(db):
-        init_db()
-
-
 def init_app(app):
     os.makedirs(app.config["INSTANCE_DIR"], exist_ok=True)
     app.teardown_appcontext(close_db)
-
-    # Auto-create schema on first boot so new users don't hit
-    # "no such table: users" before running CLI commands.
-    with app.app_context():
-        ensure_db_initialized()
 
     @app.cli.command("init-db")
     def init_db_command():

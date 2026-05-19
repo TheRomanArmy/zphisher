@@ -18,7 +18,7 @@ A separate Flask + SQLite bookkeeping app that integrates with your scheduler/in
 ## Separation of databases
 
 - Bookkeeping DB: `instance/bookkeeping.sqlite3`
-- Scheduler DB path: `instance/scheduler.sqlite3` by default, or set `SCHEDULER_DB_PATH`
+- Scheduler DB path: `instance/scheduler.sqlite3` (or set `SCHEDULER_DB_PATH` env var)
 
 No scheduler data is edited by this app. It reads scheduler tables and upserts into bookkeeping import tables.
 
@@ -31,104 +31,47 @@ No scheduler data is edited by this app. It reads scheduler tables and upserts i
 
 If your existing scheduler schema differs, adjust `app/sync_service.py` mappings.
 
----
+## Quick start
 
-## Windows quick start (PowerShell)
-
-From `roman_bookkeeping` folder:
-
-```powershell
-py -3 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-python -m flask --app run.py init-db
-python -m flask --app run.py run
-```
-
-Then open:
-
-- URL: `http://127.0.0.1:5000/login`
-- Username: `admin`
-- Password: `admin123`
-
-### If PowerShell blocks script activation
-
-Run once in **PowerShell as Administrator**:
-
-```powershell
-Set-ExecutionPolicy RemoteSigned
-```
-
-Or run commands from `cmd.exe` using:
-
-```cmd
-.venv\Scripts\python -m flask --app run.py run
-```
-
----
-
-## Linux/macOS quick start
+1) Create virtual environment and install dependencies:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-python -m flask --app run.py init-db
-python -m flask --app run.py run
 ```
 
----
+2) Initialize bookkeeping DB:
 
-## Windows: set scheduler DB path
-
-Example PowerShell:
-
-```powershell
-$env:SCHEDULER_DB_PATH = "C:\path\to\scheduler.sqlite3"
-python -m flask --app run.py run
+```bash
+flask --app run.py init-db
 ```
 
-For a permanent user-level variable:
+3) Run app:
 
-```powershell
-setx SCHEDULER_DB_PATH "C:\path\to\scheduler.sqlite3"
+```bash
+flask --app run.py run
 ```
 
-Open a new terminal after `setx`.
+4) Login:
 
----
+- URL: `http://127.0.0.1:5000/login`
+- Username: `admin`
+- Password: `admin123`
 
 ## Nightly auto-sync / auto-post
 
 Use the CLI command:
 
 ```bash
-python -m flask --app run.py nightly-jobs
+flask --app run.py nightly-jobs
 ```
 
-### Windows Task Scheduler suggestion
+Example cron (Linux):
 
-Program/script:
-
-```text
-C:\path\to\roman_bookkeeping\.venv\Scripts\python.exe
+```bash
+0 2 * * * cd /path/to/roman_bookkeeping && /path/to/.venv/bin/flask --app run.py nightly-jobs
 ```
-
-Arguments:
-
-```text
--m flask --app run.py nightly-jobs
-```
-
-Start in:
-
-```text
-C:\path\to\roman_bookkeeping
-```
-
-You can also use the helper script `run_nightly_jobs.bat`.
-
----
 
 ## Notes / TODO
 
